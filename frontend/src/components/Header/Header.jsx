@@ -44,7 +44,7 @@ const Header = () => {
               <Store className="w-6 h-6 text-white" />
             </div>
             <span className="text-gray-800 font-bold text-lg group-hover:text-indigo-600 transition-colors duration-200">
-              Mi Plataforma
+              La Pila de los Viveres
             </span>
           </Link>
 
