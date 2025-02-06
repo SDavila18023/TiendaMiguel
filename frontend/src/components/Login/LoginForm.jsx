@@ -56,37 +56,32 @@ function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-white flex items-center justify-center p-4">
-      <div className="max-w-5xl w-full bg-white rounded-2xl shadow-xl flex overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-800 to-blue-900 flex items-center justify-center p-4">
+      <div className="max-w-5xl w-full bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl flex overflow-hidden border border-white/20">
         {/* Left Side - Form */}
         <div className="w-full lg:w-1/2 p-8 lg:p-12">
           <div className="space-y-8">
             {/* Logo */}
             <div className="flex justify-center">
-              <img
-                src="https://storage.googleapis.com/devitary-image-host.appspot.com/15846435184459982716-LogoMakr_7POjrN.png"
-                className="w-32 transform hover:scale-105 transition-transform duration-300"
-                alt="Logo"
-              />
             </div>
 
             {/* Form */}
             <form onSubmit={handleLogin} className="space-y-6">
-              <h1 className="text-3xl font-bold text-center text-gray-800">
+              <h1 className="text-3xl font-bold text-center text-white">
                 Bienvenido de nuevo
               </h1>
-              <p className="text-center text-gray-600">
+              <p className="text-center text-gray-200">
                 Ingresa tus credenciales para continuar
               </p>
 
               <div className="space-y-4">
                 <div>
-                  <label className="text-sm font-medium text-gray-700 block mb-2">
+                  <label className="text-sm font-medium text-gray-200 block mb-2">
                     Correo electrónico
                   </label>
                   <input
                     type="email"
-                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all"
+                    className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all text-white placeholder-gray-400"
                     placeholder="ejemplo@correo.com"
                     required
                     value={email}
@@ -95,12 +90,12 @@ function LoginForm() {
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-gray-700 block mb-2">
+                  <label className="text-sm font-medium text-gray-200 block mb-2">
                     Contraseña
                   </label>
                   <input
                     type="password"
-                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all"
+                    className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all text-white placeholder-gray-400"
                     placeholder="••••••••"
                     required
                     value={password}
@@ -113,7 +108,7 @@ function LoginForm() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 rounded-lg transition-all flex items-center justify-center space-x-3 disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium py-3 rounded-lg transition-all flex items-center justify-center space-x-3 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   {loading ? (
                     <svg
@@ -159,19 +154,40 @@ function LoginForm() {
           </div>
         </div>
 
-        {/* Right Side - Image */}
-        <div className="hidden lg:block lg:w-1/2 bg-indigo-50">
-          <div className="h-full flex items-center justify-center p-12">
-            <div className="relative w-full max-w-lg">
-              <div className="absolute top-0 -left-4 w-72 h-72 bg-indigo-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-              <div className="absolute top-0 -right-4 w-72 h-72 bg-indigo-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-              <div className="absolute -bottom-8 left-20 w-72 h-72 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/3209/3209711.png"
-                alt="Ilustración"
-                className="relative rounded-lg transform hover:scale-105 transition-transform duration-500"
-              />
+        {/* Right Side - Image with new animated background */}
+        <div className="hidden lg:block lg:w-1/2 relative overflow-hidden">
+          <div className="absolute inset-0">
+            {/* Animated geometric shapes */}
+            <div className="absolute w-full h-full">
+              <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+              <div className="absolute top-1/3 right-1/4 w-32 h-32 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse animation-delay-2000"></div>
+              <div className="absolute bottom-1/4 left-1/3 w-32 h-32 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse animation-delay-4000"></div>
+              
+              {/* Floating particles */}
+              <div className="absolute inset-0">
+                {[...Array(20)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="absolute w-2 h-2 bg-white rounded-full animate-float"
+                    style={{
+                      top: `${Math.random() * 100}%`,
+                      left: `${Math.random() * 100}%`,
+                      animationDelay: `${Math.random() * 5}s`,
+                      animationDuration: `${5 + Math.random() * 5}s`
+                    }}
+                  ></div>
+                ))}
+              </div>
             </div>
+          </div>
+          
+          {/* Image container */}
+          <div className="relative h-full flex items-center justify-center p-12">
+            <img
+              src="https://i.imgur.com/sMkhYLg.png"
+              alt="Ilustración"
+              className="relative z-10 rounded-lg transform hover:scale-105 transition-transform duration-500 drop-shadow-2xl"
+            />
           </div>
         </div>
       </div>
