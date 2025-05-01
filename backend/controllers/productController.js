@@ -1,4 +1,7 @@
 import Product from "../models/productModel.js"; // Asegúrate de ajustar la ruta si es necesario
+import fs from "fs";
+import path from "path";
+import csv from "csv-parser";
 
 // Crear un nuevo producto
 export const createProduct = async (req, res) => {
@@ -148,5 +151,38 @@ export const deleteProduct = async (req, res) => {
     res.status(200).json({ message: "Producto eliminado" });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+export const importCSV = async (req, res) => {
+  const results = [];
+  const filePath = path.join(process.cwd(), "productos.csv"); // nombre exacto del CSV en raíz
+
+  try {
+    fs.createReadStream(filePath)
+      .pipe(csv())
+      .on("data", (data) => {
+        // Asegúrate de que los nombres de las columnas coincidan exactamente
+        const producto = {
+          name: data.Producto,
+          stock: parseInt(data.Cantidad, 10),
+          brand: data.Marca,
+          sizeProduct: data["Tamaño"],
+          category: data["Categoría"],
+          price: parseFloat(data.Precio),
+          imageUrl: data.Imagen,
+        };
+        results.push(producto);
+      })
+      .on("end", async () => {
+        try {
+          const inserted = await Product.insertMany(results);
+          res.status(200).json({ message: "Productos importados", inserted });
+        } catch (dbError) {
+          res.status(500).json({ message: "Error al guardar en BD", error: dbError });
+        }
+      });
+  } catch (error) {
+    res.status(500).json({ message: "Error al procesar el archivo CSV", error });
   }
 };
