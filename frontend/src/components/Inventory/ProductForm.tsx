@@ -5,6 +5,10 @@ import { Plus, X } from "lucide-react";
 import React from "react";
 
 const ProductForm = () => {
+
+  const CLOUDINARY_UPLOAD_PRESET = "epamigue";
+  const CLOUDINARY_CLOUD_NAME = "desqgwtus";
+  const [uploading, setUploading] = useState(false);
   const { addProduct } = useProducts();
   const [isOpen, setIsOpen] = useState(false);
   const [newProduct, setNewProduct] = useState({
@@ -19,6 +23,31 @@ const ProductForm = () => {
 
   const calculateSalePrice = (price: number) => {
     return price + price * 0.3;
+  };
+
+  const handleImageUpload = async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+
+    setUploading(true);
+
+    try {
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const data = await res.json();
+      setNewProduct((prev) => ({ ...prev, imageUrl: data.secure_url }));
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -174,18 +203,22 @@ const ProductForm = () => {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            URL de Imagen (opcional)
+            Imagen del producto
           </label>
           <input
-            type="url"
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) handleImageUpload(file);
+            }}
             className="mt-1 w-full p-2 border rounded"
-            value={newProduct.imageUrl}
-            onChange={(e) =>
-              setNewProduct({ ...newProduct, imageUrl: e.target.value })
-            }
           />
+          {uploading && <p className="text-sm text-blue-500">Subiendo imagen...</p>}
+          {newProduct.imageUrl && (
+            <img src={newProduct.imageUrl} alt="Preview" className="mt-2 h-24 object-contain" />
+          )}
         </div>
-
         <div className="flex justify-end space-x-2">
           <button
             type="submit"

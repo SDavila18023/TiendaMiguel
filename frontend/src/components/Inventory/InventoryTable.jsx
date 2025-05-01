@@ -68,6 +68,7 @@ const InventoryTable = () => {
       .then((response) => {
         setProducts(response.data);
         setFilteredProducts(response.data);
+        console.log("Productos obtenidos:", response.data);
       })
       .catch((error) => console.error("Error al obtener productos:", error));
 
