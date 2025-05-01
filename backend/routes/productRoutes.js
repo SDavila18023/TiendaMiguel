@@ -10,11 +10,13 @@ import {
   getSizes,
   updateStock,
   getProductsCount,
+  importCSV,
 } from "../controllers/productController.js";
 
 const product = express.Router();
 
 product.post("/products", createProduct);
+product.post("/import-csv",importCSV);
 product.get("/categories", getCategories);
 product.get("/sizeProducts", getSizes);
 product.get("/brands", getBrands);
