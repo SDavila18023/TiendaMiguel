@@ -9,6 +9,7 @@ import connectDB from "./config/db.js"; // Conexión a MongoDB
 import user from "./routes/userRoutes.js";
 import product from "./routes/productRoutes.js";
 import sale from "./routes/saleRoutes.js";
+import bill from "./routes/billRoutes.js";
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(morgan("dev"));
 app.use("/api/users", user);
 app.use("/api/products", product);
 app.use("/api/sales", sale);
+app.use("/api/bills",bill)
 
 // Puerto y conexión al servidor
 const PORT = process.env.PORT || 5000;

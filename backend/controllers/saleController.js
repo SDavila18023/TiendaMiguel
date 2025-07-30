@@ -43,3 +43,13 @@ export const getAllSales = async (req, res) => {
     }
   };
   
+  // Eliminar todos los productos
+  export const deleteAllSales = async (req, res) => {
+    try {
+      const result = await Sale.deleteMany({});
+      res.status(200).json({ message: "Todos los productos han sido eliminados.", deletedCount: result.deletedCount });
+    } catch (error) {
+      res.status(500).json({ message: "Error al eliminar los productos", error: error.message });
+    }
+  };
+  

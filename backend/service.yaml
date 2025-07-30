@@ -1,0 +1,19 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: mi-backend
+  namespace: default
+spec:
+  template:
+    metadata:
+      annotations:
+        run.googleapis.com/execution-environment: gen2
+        run.googleapis.com/cpu-throttling: "true"
+        run.googleapis.com/max-instances: "1"   # ⚠️ Impide que escale y genere cobros
+    spec:
+      containers:
+        - image: gcr.io/MI_PROYECTO/mi-backend
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "1"

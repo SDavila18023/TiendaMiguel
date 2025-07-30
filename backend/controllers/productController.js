@@ -156,7 +156,7 @@ export const deleteProduct = async (req, res) => {
 
 export const importCSV = async (req, res) => {
   const results = [];
-  const filePath = path.join(process.cwd(), "productos.csv"); // nombre exacto del CSV en raíz
+  const filePath = path.join(process.cwd(), "productos22.csv"); // nombre exacto del CSV en raíz
 
   try {
     fs.createReadStream(filePath)
@@ -184,5 +184,15 @@ export const importCSV = async (req, res) => {
       });
   } catch (error) {
     res.status(500).json({ message: "Error al procesar el archivo CSV", error });
+  }
+};
+
+// Eliminar todos los productos
+export const deleteAllProducts = async (req, res) => {
+  try {
+    const result = await Product.deleteMany({});
+    res.status(200).json({ message: "Todos los productos han sido eliminados.", deletedCount: result.deletedCount });
+  } catch (error) {
+    res.status(500).json({ message: "Error al eliminar los productos", error: error.message });
   }
 };

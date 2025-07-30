@@ -11,6 +11,7 @@ import {
   updateStock,
   getProductsCount,
   importCSV,
+  deleteAllProducts,
 } from "../controllers/productController.js";
 
 const product = express.Router();
@@ -26,5 +27,6 @@ product.get("/total", getProductsCount);
 product.put("/products/:id", updateProduct);
 product.put("/update-stock", updateStock);
 product.delete("/products/:id", deleteProduct);
+product.delete("/delete", deleteAllProducts);
 
 export default product;
